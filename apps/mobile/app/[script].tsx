@@ -1,6 +1,6 @@
 // apps/mobile/app/teleprompter/[script].tsx
 import React, { useState, useRef, useEffect } from "react";
-import { ScrollView, View } from "react-native";
+import { Platform, ScrollView, View } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { Button, ButtonText } from "@/components/ui/button";
 import { Box } from "@/components/ui/box";
@@ -59,7 +59,6 @@ export default function TeleprompterScreen() {
 
   return (
     <View className="flex-1 bg-background-100">
-      {/* Script content */}
       <ScrollView
         ref={scrollViewRef}
         className="flex-1 px-4"
@@ -79,8 +78,6 @@ export default function TeleprompterScreen() {
           {scriptContent}
         </Text>
       </ScrollView>
-
-      {/* Controls */}
       <Box className="p-4 bg-background-0 border-t border-outline-200">
         {/* Sliders */}
         <Box className="flex-row items-center justify-between mb-4">
@@ -100,7 +97,7 @@ export default function TeleprompterScreen() {
               value={fontSize}
               onValueChange={setFontSize}
               minimumValue={16}
-              maximumValue={48}
+              maximumValue={192}
               step={2}
             />
           </Box>
