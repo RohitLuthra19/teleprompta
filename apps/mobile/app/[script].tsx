@@ -20,7 +20,7 @@ export default function TeleprompterScreen() {
   // State
   const [isPlaying, setIsPlaying] = useState(false);
   const [speed, setSpeed] = useState(1); // pixels per frame
-  const [fontSize, setFontSize] = useState(24);
+  const [fontSize, setFontSize] = useState(48);
 
   // Refs
   const scrollViewRef = useRef<ScrollView>(null);
