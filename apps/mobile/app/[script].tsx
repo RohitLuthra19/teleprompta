@@ -68,7 +68,11 @@ export default function TeleprompterScreen() {
         <Text
           style={{
             fontSize: fontSize,
-            lineHeight: fontSize * 1.5,
+            //lineHeight: fontSize * 1.5,
+            lineHeight: Platform.select({
+              web: 1.2,
+              default: fontSize * 1.5,
+            }),
             letterSpacing: 0.5,
             textAlign: "left",
             color: "#000000",
