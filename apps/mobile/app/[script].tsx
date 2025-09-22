@@ -69,11 +69,11 @@ export default function TeleprompterScreen() {
         <Text
           style={{
             fontSize: fontSize,
-            lineHeight: fontSize * 1.5, // Add proper line height
-            letterSpacing: 0.5, // Add slight letter spacing
-            textAlign: "left", // Ensure left alignment
-            color: "#000000", // Ensure good contrast
-            paddingHorizontal: 16, // Add some horizontal padding
+            lineHeight: fontSize * 1.5,
+            letterSpacing: 0.5,
+            textAlign: "left",
+            color: "#000000",
+            paddingHorizontal: 16,
           }}
         >
           {scriptContent}
