@@ -5,8 +5,13 @@ import { GluestackUIProvider } from "./ui/gluestack-ui-provider";
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <SafeAreaProvider>
-      <GluestackUIProvider>
-        <SafeAreaView style={{ flex: 1 }}>{children}</SafeAreaView>
+      <GluestackUIProvider mode="light">
+        <SafeAreaView
+          edges={["top", "bottom", "left", "right"]}
+          style={{ flex: 1 }}
+        >
+          {children}
+        </SafeAreaView>
       </GluestackUIProvider>
     </SafeAreaProvider>
   );
