@@ -9,6 +9,16 @@ To run your project, navigate to the directory and run one of the following pnpm
 
 pnpm --filter backend dev
 
+or
+
+cd apps/backend
+pnpm dev
+
 # Start expo mobile app
 
 pnpm --filter mobile start
+
+or
+
+cd apps/mobile
+npx expo start --web
