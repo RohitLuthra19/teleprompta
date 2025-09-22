@@ -1,6 +1,7 @@
 import React from "react";
-import { View } from "react-native";
-import { Button, ButtonText } from "@/components/ui/button";
+import { View, Text, Pressable } from "react-native";
+import { Card } from "@/components/ui/card";
+import { Heading } from "@/components/ui/heading";
 
 interface ScriptCardProps {
   title: string;
@@ -10,18 +11,19 @@ interface ScriptCardProps {
 
 export function ScriptCard({ title, content, onPress }: ScriptCardProps) {
   return (
-    <Button
-      variant="outline"
-      action="primary"
-      onPress={onPress}
-      className="w-full p-4 mb-4"
-    >
-      <View className="w-full">
-        <ButtonText className="text-lg font-bold mb-2">{title}</ButtonText>
-        <ButtonText className="text-sm text-typography-600" numberOfLines={2}>
-          {content}
-        </ButtonText>
-      </View>
-    </Button>
+    <Pressable onPress={onPress}>
+      <Card
+        size="lg"
+        variant="elevated"
+        className="p-5 rounded-lg max-w-full m-3"
+      >
+        <View className="w-full">
+          <Heading className="text-lg font-bold mb-2">{title}</Heading>
+          <Text className="text-sm text-typography-600" numberOfLines={2}>
+            {content}
+          </Text>
+        </View>
+      </Card>
+    </Pressable>
   );
 }
