@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "pnpm --filter mobile build && pnpm --filter backend build",
+    "dev": "pnpm --parallel dev",
+    "clean": "pnpm --parallel clean"
   },
   "keywords": [],
   "author": "",

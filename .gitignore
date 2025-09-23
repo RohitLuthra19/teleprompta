@@ -1,1 +1,19 @@
 node_modules
+# dependencies
+node_modules/
+
+# builds
+apps/mobile/dist/
+apps/backend/dist/
+
+# expo
+.expo/
+dist/
+web-build/
+
+# local env files
+.env*.local
+
+# typescript
+*.tsbuildinfo
+.vercel
