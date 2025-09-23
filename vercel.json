@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "pnpm build",
+  "buildCommand": "pnpm --filter backend build && pnpm --filter mobile build",
   "builds": [
     {
       "src": "apps/mobile/dist/**",
