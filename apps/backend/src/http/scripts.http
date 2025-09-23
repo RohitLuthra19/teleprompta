@@ -1,15 +1,26 @@
-@local = http://localhost:3000
-@prod  = https://teleprompta.vercel.app/
+###############################################
+# Login
+###############################################
+# @name loginRequest
+POST http://localhost:3000/api/v1/auth/login
+Content-Type: application/json
 
-@jwt   = eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJjbWZ3YmNvdXgwMDAwMG14dzJzb3ZhcW0xIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzU4NjIwOTM3fQ.w9nJ2Jqp-1DDLpFw52qGXYpppz5C_mznSgOszKbgIEk
+{
+  "email": "test@example.com",
+  "password": "Password123!"
+}
+###
+
+@authToken = {{loginRequest.response.body.$.token}}
+
 
 
 ###############################################
 # Create a new script
 ###############################################
-POST {{local}}/api/v1/scripts
+POST {{baseUrl}}/api/v1/scripts
 Content-Type: application/json
-Authorization: Bearer {{jwt}}
+Authorization: Bearer {{authToken}}
 
 {
   "title": "My First Teleprompter Script",
@@ -21,25 +32,25 @@ Authorization: Bearer {{jwt}}
 ###############################################
 # Get all scripts
 ###############################################
-GET {{local}}/api/v1/scripts
-Authorization: Bearer {{jwt}}
+GET {{baseUrl}}/api/v1/scripts
+Authorization: Bearer {{authToken}}
 
 ###
 
 ###############################################
 # Get a single script
 ###############################################
-GET {{local}}/api/v1/scripts/<SCRIPT_ID>
-Authorization: Bearer {{jwt}}
+GET {{baseUrl}}/api/v1/scripts/<SCRIPT_ID>
+Authorization: Bearer {{authToken}}
 
 ###
 
 ###############################################
 # Update a script
 ###############################################
-PUT {{local}}/api/v1/scripts/<SCRIPT_ID>
+PUT {{baseUrl}}/api/v1/scripts/<SCRIPT_ID>
 Content-Type: application/json
-Authorization: Bearer {{jwt}}
+Authorization: Bearer {{authToken}}
 
 {
   "title": "Updated Script Title",
@@ -51,5 +62,5 @@ Authorization: Bearer {{jwt}}
 ###############################################
 # Delete a script
 ###############################################
-DELETE {{local}}/api/v1/scripts/<SCRIPT_ID>
-Authorization: Bearer {{jwt}}
+DELETE {{baseUrl}}/api/v1/scripts/<SCRIPT_ID>
+Authorization: Bearer {{authToken}}
