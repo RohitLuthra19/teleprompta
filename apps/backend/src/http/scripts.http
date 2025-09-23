@@ -1,9 +1,15 @@
+@local = http://localhost:3000
+@prod  = https://teleprompta.vercel.app/
+
+@jwt   = eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJjbWZ3YmNvdXgwMDAwMG14dzJzb3ZhcW0xIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzU4NjIwOTM3fQ.w9nJ2Jqp-1DDLpFw52qGXYpppz5C_mznSgOszKbgIEk
+
+
 ###############################################
 # Create a new script
 ###############################################
-POST http://localhost:3000/api/v1/scripts
+POST {{local}}/api/v1/scripts
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJjbWZ3YmNvdXgwMDAwMG14dzJzb3ZhcW0xIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzU4NjIwOTM3fQ.w9nJ2Jqp-1DDLpFw52qGXYpppz5C_mznSgOszKbgIEk
+Authorization: Bearer {{jwt}}
 
 {
   "title": "My First Teleprompter Script",
@@ -15,27 +21,25 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJjbWZ3YmNvdXgwMDAwMG14d
 ###############################################
 # Get all scripts
 ###############################################
-GET http://localhost:3000/api/v1/scripts
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJjbWZ3YmNvdXgwMDAwMG14dzJzb3ZhcW0xIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzU4NjIwOTM3fQ.w9nJ2Jqp-1DDLpFw52qGXYpppz5C_mznSgOszKbgIEk
+GET {{local}}/api/v1/scripts
+Authorization: Bearer {{jwt}}
 
 ###
 
 ###############################################
 # Get a single script
 ###############################################
-# Replace <SCRIPT_ID> with the actual script id from the create response
-GET http://localhost:3000/api/v1/scripts/cmfwbtomw00000mvacgyafpim
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJjbWZ3YmNvdXgwMDAwMG14dzJzb3ZhcW0xIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzU4NjIwOTM3fQ.w9nJ2Jqp-1DDLpFw52qGXYpppz5C_mznSgOszKbgIEk
+GET {{local}}/api/v1/scripts/<SCRIPT_ID>
+Authorization: Bearer {{jwt}}
 
 ###
 
 ###############################################
 # Update a script
 ###############################################
-# Replace <SCRIPT_ID> with the actual script id
-PUT http://localhost:3000/api/v1/scripts/cmfwbtomw00000mvacgyafpim
+PUT {{local}}/api/v1/scripts/<SCRIPT_ID>
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJjbWZ3YmNvdXgwMDAwMG14dzJzb3ZhcW0xIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzU4NjIwOTM3fQ.w9nJ2Jqp-1DDLpFw52qGXYpppz5C_mznSgOszKbgIEk
+Authorization: Bearer {{jwt}}
 
 {
   "title": "Updated Script Title",
@@ -47,6 +51,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJjbWZ3YmNvdXgwMDAwMG14d
 ###############################################
 # Delete a script
 ###############################################
-# Replace <SCRIPT_ID> with the actual script id
-DELETE http://localhost:3000/api/v1/scripts/cmfwbtomw00000mvacgyafpim
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJjbWZ3YmNvdXgwMDAwMG14dzJzb3ZhcW0xIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzU4NjIwOTM3fQ.w9nJ2Jqp-1DDLpFw52qGXYpppz5C_mznSgOszKbgIEk
+DELETE {{local}}/api/v1/scripts/<SCRIPT_ID>
+Authorization: Bearer {{jwt}}

@@ -1,8 +1,7 @@
 import { Router, Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
 import { authMiddleware } from "../middleware/auth";
+import prisma from "../prisma";
 
-const prisma = new PrismaClient();
 const router = Router();
 
 // Interface for TypeScript

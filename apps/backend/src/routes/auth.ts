@@ -1,9 +1,8 @@
 import { Router, Request, Response } from "express";
 import * as argon2 from "argon2";
 import { SignJWT } from "jose";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../prisma";
 
-const prisma = new PrismaClient();
 const router = Router();
 
 const JWT_SECRET = new TextEncoder().encode(
