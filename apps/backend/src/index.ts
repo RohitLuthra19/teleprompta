@@ -1,8 +1,10 @@
-import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
-import authRouter from "./routes/auth";
-import profileRouter from "./routes/user";
-import scriptRouter from "./routes/script";
+import express, { NextFunction, Request, Response } from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+import authRouter from "./routes/auth.js";
+import scriptRouter from "./routes/script.js";
+import profileRouter from "./routes/user.js";
 
 // -------------------
 // App Initialization
@@ -56,7 +58,16 @@ app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
 // -------------------
 // Start Server
 // -------------------
-if (require.main === module) {
+const isDirectRun = (() => {
+  try {
+    const currentFile = fileURLToPath(import.meta.url);
+    return path.resolve(process.argv[1] || "") === currentFile;
+  } catch (_e) {
+    return false;
+  }
+})();
+
+if (isDirectRun) {
   app.listen(PORT, () => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);
   });

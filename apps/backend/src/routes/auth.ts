@@ -1,7 +1,7 @@
-import { Router, Request, Response } from "express";
 import * as argon2 from "argon2";
+import { Request, Response, Router } from "express";
 import { SignJWT } from "jose";
-import prisma from "../prisma";
+import prisma from "../prisma.js";
 
 const router = Router();
 
