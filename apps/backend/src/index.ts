@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import authRouter from "./routes/auth";
 import profileRouter from "./routes/user";
+import scriptRouter from "./routes/script";
 
 // -------------------
 // App Initialization
@@ -39,6 +40,9 @@ app.use("/api/v1/auth", authRouter);
 // Protected route example
 // req.user is added by authMiddleware
 app.use("/api/v1/profile", profileRouter);
+
+// Script routes
+app.use("/api/v1/scripts", scriptRouter);
 
 // -------------------
 // Global Error Handler

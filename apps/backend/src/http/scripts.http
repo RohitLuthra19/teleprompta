@@ -1,0 +1,52 @@
+###############################################
+# Create a new script
+###############################################
+POST http://localhost:3000/api/v1/scripts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJjbWZ3YmNvdXgwMDAwMG14dzJzb3ZhcW0xIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzU4NjIwOTM3fQ.w9nJ2Jqp-1DDLpFw52qGXYpppz5C_mznSgOszKbgIEk
+
+{
+  "title": "My First Teleprompter Script",
+  "description": "This is a detailed description for my first teleprompter script."
+}
+
+###
+
+###############################################
+# Get all scripts
+###############################################
+GET http://localhost:3000/api/v1/scripts
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJjbWZ3YmNvdXgwMDAwMG14dzJzb3ZhcW0xIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzU4NjIwOTM3fQ.w9nJ2Jqp-1DDLpFw52qGXYpppz5C_mznSgOszKbgIEk
+
+###
+
+###############################################
+# Get a single script
+###############################################
+# Replace <SCRIPT_ID> with the actual script id from the create response
+GET http://localhost:3000/api/v1/scripts/cmfwbtomw00000mvacgyafpim
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJjbWZ3YmNvdXgwMDAwMG14dzJzb3ZhcW0xIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzU4NjIwOTM3fQ.w9nJ2Jqp-1DDLpFw52qGXYpppz5C_mznSgOszKbgIEk
+
+###
+
+###############################################
+# Update a script
+###############################################
+# Replace <SCRIPT_ID> with the actual script id
+PUT http://localhost:3000/api/v1/scripts/cmfwbtomw00000mvacgyafpim
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJjbWZ3YmNvdXgwMDAwMG14dzJzb3ZhcW0xIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzU4NjIwOTM3fQ.w9nJ2Jqp-1DDLpFw52qGXYpppz5C_mznSgOszKbgIEk
+
+{
+  "title": "Updated Script Title",
+  "description": "Updated description for the script."
+}
+
+###
+
+###############################################
+# Delete a script
+###############################################
+# Replace <SCRIPT_ID> with the actual script id
+DELETE http://localhost:3000/api/v1/scripts/cmfwbtomw00000mvacgyafpim
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJjbWZ3YmNvdXgwMDAwMG14dzJzb3ZhcW0xIiwiZW1haWwiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiZXhwIjoxNzU4NjIwOTM3fQ.w9nJ2Jqp-1DDLpFw52qGXYpppz5C_mznSgOszKbgIEk
