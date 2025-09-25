@@ -181,6 +181,19 @@ importers:
         specifier: ~5.9.2
         version: 5.9.2
 
+  packages/json-form-lib:
+    dependencies:
+      react:
+        specifier: '*'
+        version: 19.1.0
+      react-native:
+        specifier: '*'
+        version: 0.81.4(@babel/core@7.28.4)(@types/react@19.1.13)(react@19.1.0)
+    devDependencies:
+      typescript:
+        specifier: ^5.0.0
+        version: 5.9.2
+
 packages:
 
   '@0no-co/graphql.web@1.2.0':
