@@ -1,6 +1,5 @@
 export {
-    NumberInputField, TextAreaField, TextInputField, getRegisteredFieldTypes,
-    isFieldTypeSupported, registerBuiltInFieldComponents
+    EmailInputField, getRegisteredFieldTypes, isFieldTypeSupported, NumberInputField, PasswordInputField, registerBuiltInFieldComponents, TextAreaField, TextInputField
 } from "./components/fields";
 export { FieldWrapper } from "./components/FieldWrapper";
 export { FieldRenderer, fieldRenderer } from "./FieldRenderer";

@@ -35,7 +35,7 @@ export const TextAreaField: React.FC<FieldComponentProps> = ({
     const charactersNoSpaces = text.replace(/\s/g, '').length;
     const words = text.trim() ? text.trim().split(/\s+/).length : 0;
     const lines = text.split('\n').length;
-    const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim()).length;
+    const paragraphs = text.split(/\n\s*\n/).filter((p: string) => p.trim()).length;
     
     return { characters, charactersNoSpaces, words, lines, paragraphs };
   }, [value]);
