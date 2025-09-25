@@ -449,11 +449,13 @@ export interface RenderContext {
   disabled: boolean;
   isValid: boolean;
   isDirty: boolean;
+  // Event handlers
+  onChange?: (fieldId: string, value: any) => void;
+  onBlur?: (fieldId: string) => void;
+  onFocus?: (fieldId: string) => void;
 }
 
-export interface FieldComponent {
-  (props: FieldComponentProps): React.ReactElement;
-}
+export interface FieldComponent extends React.FC<FieldComponentProps> {}
 
 export interface FieldComponentProps {
   field: ParsedField;

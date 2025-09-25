@@ -14,7 +14,9 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "@gluestack-ui/core": "^3.0.0",
+    "@gluestack-ui/utils": "^3.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-native": "^5.4.3",
