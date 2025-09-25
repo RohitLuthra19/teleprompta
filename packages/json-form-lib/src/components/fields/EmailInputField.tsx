@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import * as React from 'react';
 import { Text, TextInput, View } from 'react-native';
 import type { FieldComponentProps, TextField } from '../../types';
 import { FieldWrapper } from '../FieldWrapper';
@@ -66,7 +66,7 @@ export const EmailInputField: React.FC<FieldComponentProps> = ({
     return { isValid, suggestion };
   };
 
-  const emailValidation = useMemo(() => validateEmail(value || ''), [value]);
+  const emailValidation = React.useMemo(() => validateEmail(value || ''), [value]);
 
   // Input styles following Gluestack v3 patterns
   const inputStyles = {

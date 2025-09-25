@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 import { Text, TextInput, View } from 'react-native';
 import type { FieldComponentProps, TextAreaField as TextAreaFieldType } from '../../types';
 import { FieldWrapper } from '../FieldWrapper';
@@ -22,7 +22,7 @@ export const TextAreaField: React.FC<FieldComponentProps> = ({
   const hasError = error && error.length > 0 && touched;
   const isReadonly = textAreaField.readonly;
   const rows = textAreaField.rows || 4;
-  const [contentHeight, setContentHeight] = useState<number | undefined>();
+  const [contentHeight, setContentHeight] = React.useState<number | undefined>();
 
   // Calculate minimum height based on rows
   const minHeight = Math.max(rows * 20 + 20, 80); // 20px per row + padding

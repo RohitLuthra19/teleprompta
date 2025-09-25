@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import * as React from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import type { FieldComponentProps, TextField } from "../../types";
 import { FieldWrapper } from "../FieldWrapper";
@@ -21,7 +21,7 @@ export const PasswordInputField: React.FC<FieldComponentProps> = ({
   const passwordField = field.field as TextField;
   const hasError = error && error.length > 0 && touched;
   const isReadonly = passwordField.readonly;
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
 
   // Password strength calculation
   const calculatePasswordStrength = (

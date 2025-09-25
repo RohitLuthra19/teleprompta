@@ -1,11 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import * as React from "react";
 import { Button, Text, View } from "react-native";
 import { fieldRenderer } from "./FieldRenderer";
 import { registerBuiltInFieldComponents } from "./components/fields";
@@ -21,7 +14,7 @@ import type {
 export const Form = React.forwardRef<FormRef, FormProps>(
   ({ schema, initialValues = {}, events, disabled = false, testID }, ref) => {
     // Initialize built-in field components on first render
-    const [isInitialized, setIsInitialized] = useState(false);
+    const [isInitialized, setIsInitialized] = React.useState(false);
 
     React.useEffect(() => {
       if (!isInitialized) {
@@ -31,18 +24,20 @@ export const Form = React.forwardRef<FormRef, FormProps>(
     }, [isInitialized]);
 
     // Internal state management
-    const [values, setValues] = useState<Record<string, any>>(initialValues);
-    const [errors, setErrors] = useState<ValidationErrors>({});
-    const [touched, setTouched] = useState<Record<string, boolean>>({});
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isValid, setIsValid] = useState(true);
-    const [isDirty, setIsDirty] = useState(false);
+    const [values, setValues] =
+      React.useState<Record<string, any>>(initialValues);
+    const [errors, setErrors] = React.useState<ValidationErrors>({});
+    const [touched, setTouched] = React.useState<Record<string, boolean>>({});
+    const [isSubmitting, setIsSubmitting] = React.useState(false);
+    const [isValid, setIsValid] = React.useState(false);
+    const [isDirty, setIsDirty] = React.useState(false);
+    const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
     // Track initial values to determine dirty state
-    const initialValuesRef = useRef(initialValues);
+    const initialValuesRef = React.useRef(initialValues);
 
     // Memoized validation state
-    const validationState = useMemo(
+    const validationState = React.useMemo(
       () => ({
         isValid,
         errors,
@@ -52,7 +47,7 @@ export const Form = React.forwardRef<FormRef, FormProps>(
     );
 
     // Check if form is dirty (values changed from initial)
-    const checkDirtyState = useCallback(
+    const checkDirtyState = React.useCallback(
       (currentValues: Record<string, any>) => {
         const isDirtyState =
           JSON.stringify(currentValues) !==
@@ -64,7 +59,7 @@ export const Form = React.forwardRef<FormRef, FormProps>(
     );
 
     // Optimized field value change handler
-    const handleChange = useCallback(
+    const handleChange = React.useCallback(
       (id: string, value: any) => {
         setValues((prev) => {
           const newValues = { ...prev, [id]: value };
@@ -77,12 +72,36 @@ export const Form = React.forwardRef<FormRef, FormProps>(
 
           return newValues;
         });
+
+        // Clear field error when user starts typing
+        setErrors((prev) => {
+          if (prev[id]) {
+            const newErrors = { ...prev };
+            delete newErrors[id];
+            return newErrors;
+          }
+          return prev;
+        });
+
+        // Silent validation to update isValid state without showing errors
+        setTimeout(() => {
+          let formIsValid = true;
+          for (const field of schema.fields) {
+            const fieldValue =
+              values[field.id] === id ? value : values[field.id];
+            if (field.required && (!fieldValue || fieldValue === "")) {
+              formIsValid = false;
+              break;
+            }
+          }
+          setIsValid(formIsValid);
+        }, 0);
       },
-      [events, checkDirtyState]
+      [events, checkDirtyState, schema.fields, values]
     );
 
     // Field focus handler
-    const handleFieldFocus = useCallback(
+    const handleFieldFocus = React.useCallback(
       (fieldId: string) => {
         events?.fieldFocus?.(fieldId);
       },
@@ -90,7 +109,7 @@ export const Form = React.forwardRef<FormRef, FormProps>(
     );
 
     // Field blur handler
-    const handleFieldBlur = useCallback(
+    const handleFieldBlur = React.useCallback(
       (fieldId: string) => {
         setTouched((prev) => ({ ...prev, [fieldId]: true }));
         events?.fieldBlur?.(fieldId);
@@ -99,45 +118,47 @@ export const Form = React.forwardRef<FormRef, FormProps>(
     );
 
     // Basic validation function (will be enhanced in validation engine task)
-    const validateForm = useCallback(async (): Promise<ValidationResult> => {
-      const formErrors: ValidationErrors = {};
-      let formIsValid = true;
+    const validateForm =
+      React.useCallback(async (): Promise<ValidationResult> => {
+        const formErrors: ValidationErrors = {};
+        let formIsValid = true;
 
-      // Basic required field validation
-      for (const field of schema.fields) {
-        const fieldErrors: string[] = [];
-        const fieldValue = values[field.id];
+        // Basic required field validation
+        for (const field of schema.fields) {
+          const fieldErrors: string[] = [];
+          const fieldValue = values[field.id];
 
-        // Check required fields
-        if (field.required && (!fieldValue || fieldValue === "")) {
-          fieldErrors.push(`${field.label} is required`);
-          formIsValid = false;
+          // Check required fields
+          if (field.required && (!fieldValue || fieldValue === "")) {
+            fieldErrors.push(`${field.label} is required`);
+            formIsValid = false;
+          }
+
+          if (fieldErrors.length > 0) {
+            formErrors[field.id] = fieldErrors;
+          }
         }
 
-        if (fieldErrors.length > 0) {
-          formErrors[field.id] = fieldErrors;
-        }
-      }
+        setErrors(formErrors);
+        setIsValid(formIsValid);
 
-      setErrors(formErrors);
-      setIsValid(formIsValid);
+        const result: ValidationResult = {
+          isValid: formIsValid,
+          errors: formErrors,
+        };
 
-      const result: ValidationResult = {
-        isValid: formIsValid,
-        errors: formErrors,
-      };
+        // Trigger validation change event
+        events?.validationChange?.(formIsValid, formErrors);
 
-      // Trigger validation change event
-      events?.validationChange?.(formIsValid, formErrors);
-
-      return result;
-    }, [schema.fields, values, events]);
+        return result;
+      }, [schema.fields, values, events]);
 
     // Form submission handler
-    const handleSubmit = useCallback(async () => {
+    const handleSubmit = React.useCallback(async () => {
       if (isSubmitting) return;
 
       setIsSubmitting(true);
+      setHasSubmitted(true); // Mark form as submitted to show errors
 
       try {
         // Validate form before submission
@@ -154,19 +175,20 @@ export const Form = React.forwardRef<FormRef, FormProps>(
     }, [isSubmitting, validateForm, events, values]);
 
     // Form reset handler
-    const handleReset = useCallback(() => {
+    const handleReset = React.useCallback(() => {
       setValues(initialValuesRef.current);
       setErrors({});
       setTouched({});
       setIsSubmitting(false);
       setIsDirty(false);
       setIsValid(true);
+      setHasSubmitted(false); // Reset submitted state
 
       events?.reset?.();
     }, [events]);
 
     // Expose form methods via ref
-    useImperativeHandle(
+    React.useImperativeHandle(
       ref,
       () => ({
         submit: handleSubmit,
@@ -216,8 +238,29 @@ export const Form = React.forwardRef<FormRef, FormProps>(
       ]
     );
 
+    // Initial validation on mount (silent - no error display)
+    React.useEffect(() => {
+      // Perform initial validation to set the correct isValid state but don't show errors
+      const silentValidate = async () => {
+        const formErrors: ValidationErrors = {};
+        let formIsValid = true;
+
+        for (const field of schema.fields) {
+          const fieldValue = values[field.id];
+          if (field.required && (!fieldValue || fieldValue === "")) {
+            formIsValid = false;
+            // Don't set errors here - just update isValid state
+          }
+        }
+
+        setIsValid(formIsValid);
+      };
+
+      silentValidate();
+    }, [schema.fields, values]);
+
     // Lifecycle effects
-    useEffect(() => {
+    React.useEffect(() => {
       events?.mount?.();
       return () => {
         events?.unmount?.();
@@ -225,7 +268,7 @@ export const Form = React.forwardRef<FormRef, FormProps>(
     }, [events]);
 
     // Update initial values when prop changes
-    useEffect(() => {
+    React.useEffect(() => {
       if (
         JSON.stringify(initialValues) !==
         JSON.stringify(initialValuesRef.current)
@@ -237,7 +280,7 @@ export const Form = React.forwardRef<FormRef, FormProps>(
     }, [initialValues]);
 
     // Create render context for field renderer
-    const renderContext: RenderContext = useMemo(
+    const renderContext: RenderContext = React.useMemo(
       () => ({
         values,
         errors,
@@ -316,6 +359,19 @@ export const Form = React.forwardRef<FormRef, FormProps>(
             )}
 
             {renderField(field)}
+
+            {/* Display field errors only if field is touched or form has been submitted */}
+            {errors[field.id] &&
+              errors[field.id].length > 0 &&
+              (touched[field.id] || hasSubmitted) && (
+                <View style={{ marginTop: 4 }}>
+                  {errors[field.id].map((error, index) => (
+                    <Text key={index} style={{ color: "red", fontSize: 12 }}>
+                      {error}
+                    </Text>
+                  ))}
+                </View>
+              )}
           </View>
         ))}
 
@@ -323,7 +379,7 @@ export const Form = React.forwardRef<FormRef, FormProps>(
           <Button
             title="Submit"
             onPress={handleSubmit}
-            disabled={disabled || isSubmitting || !isValid}
+            disabled={disabled || isSubmitting}
             testID="form-submit-button"
           />
           <Button

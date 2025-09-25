@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { Text, TextInput, View } from 'react-native';
 import type { FieldComponentProps, TextField } from '../../types';
 import { FieldWrapper } from '../FieldWrapper';
