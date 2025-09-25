@@ -85,35 +85,30 @@ export const TextInputField: React.FC<FieldComponentProps> = ({
           accessibilityHint={textField.description}
           testID={`text-input-${textField.id}`}
         />
-
-        {/* Character count indicator for fields with maxLength */}
-        {textField.maxLength && (
-          <View
-            style={{
-              position: "absolute",
-              right: 8,
-              bottom: 8,
-              backgroundColor: "rgba(255, 255, 255, 0.9)",
-              paddingHorizontal: 4,
-              paddingVertical: 2,
-              borderRadius: 4,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 12,
-                color: "#6b7280",
-                fontVariant: ["tabular-nums"],
-              }}
-              accessibilityLabel={`${(value || "").length} of ${
-                textField.maxLength
-              } characters`}
-            >
-              {(value || "").length}/{textField.maxLength}
-            </Text>
-          </View>
-        )}
       </View>
+
+      {/* Character count indicator for fields with maxLength */}
+      {textField.maxLength && (
+        <View
+          style={{
+            marginTop: 4,
+            alignItems: "flex-end",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 12,
+              color: "#6b7280",
+              fontVariant: ["tabular-nums"],
+            }}
+            accessibilityLabel={`${(value || "").length} of ${
+              textField.maxLength
+            } characters`}
+          >
+            {(value || "").length}/{textField.maxLength}
+          </Text>
+        </View>
+      )}
     </FieldWrapper>
   );
 };

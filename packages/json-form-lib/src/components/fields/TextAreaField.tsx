@@ -113,36 +113,7 @@ export const TextAreaField: React.FC<FieldComponentProps> = ({
           testID={`textarea-${textAreaField.id}`}
         />
 
-        {/* Character count indicator for fields with maxLength */}
-        {textAreaField.maxLength && (
-          <View
-            style={{
-              position: 'absolute',
-              right: 8,
-              bottom: 8,
-              backgroundColor: 'rgba(255, 255, 255, 0.9)',
-              paddingHorizontal: 6,
-              paddingVertical: 3,
-              borderRadius: 4,
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: 1 },
-              shadowOpacity: 0.1,
-              shadowRadius: 2,
-              elevation: 1
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 12,
-                color: textStats.characters >= textAreaField.maxLength * 0.9 ? '#ef4444' : '#6b7280',
-                fontVariant: ['tabular-nums']
-              }}
-              accessibilityLabel={`${textStats.characters} of ${textAreaField.maxLength} characters`}
-            >
-              {textStats.characters}/{textAreaField.maxLength}
-            </Text>
-          </View>
-        )}
+
 
         {/* Auto-grow indicator */}
         {textAreaField.autoGrow && (
@@ -170,6 +141,27 @@ export const TextAreaField: React.FC<FieldComponentProps> = ({
           </View>
         )}
       </View>
+
+      {/* Character count indicator for fields with maxLength */}
+      {textAreaField.maxLength && (
+        <View
+          style={{
+            marginTop: 4,
+            alignItems: 'flex-end'
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 12,
+              color: textStats.characters >= textAreaField.maxLength * 0.9 ? '#ef4444' : '#6b7280',
+              fontVariant: ['tabular-nums']
+            }}
+            accessibilityLabel={`${textStats.characters} of ${textAreaField.maxLength} characters`}
+          >
+            {textStats.characters}/{textAreaField.maxLength}
+          </Text>
+        </View>
+      )}
 
       {/* Text statistics */}
       {value && value.length > 0 && (

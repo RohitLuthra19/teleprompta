@@ -198,13 +198,8 @@ export const PasswordInputField: React.FC<FieldComponentProps> = ({
         {passwordField.maxLength && (
           <View
             style={{
-              position: "absolute",
-              left: 8,
-              bottom: 8,
-              backgroundColor: "rgba(255, 255, 255, 0.9)",
-              paddingHorizontal: 4,
-              paddingVertical: 2,
-              borderRadius: 4,
+              marginTop: 4,
+              alignItems: "flex-end",
             }}
           >
             <Text
@@ -221,6 +216,7 @@ export const PasswordInputField: React.FC<FieldComponentProps> = ({
             </Text>
           </View>
         )}
+
       </View>
     </FieldWrapper>
   );

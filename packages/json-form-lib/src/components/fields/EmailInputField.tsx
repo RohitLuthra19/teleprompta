@@ -165,32 +165,29 @@ export const EmailInputField: React.FC<FieldComponentProps> = ({
           </View>
         )}
 
-        {/* Character count indicator for fields with maxLength */}
-        {emailField.maxLength && (
-          <View
-            style={{
-              position: 'absolute',
-              left: 8,
-              bottom: 8,
-              backgroundColor: 'rgba(255, 255, 255, 0.9)',
-              paddingHorizontal: 4,
-              paddingVertical: 2,
-              borderRadius: 4
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 12,
-                color: '#6b7280',
-                fontVariant: ['tabular-nums']
-              }}
-              accessibilityLabel={`${(value || '').length} of ${emailField.maxLength} characters`}
-            >
-              {(value || '').length}/{emailField.maxLength}
-            </Text>
-          </View>
-        )}
+
       </View>
+
+      {/* Character count indicator for fields with maxLength */}
+      {emailField.maxLength && (
+        <View
+          style={{
+            marginTop: 4,
+            alignItems: 'flex-end'
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 12,
+              color: '#6b7280',
+              fontVariant: ['tabular-nums']
+            }}
+            accessibilityLabel={`${(value || '').length} of ${emailField.maxLength} characters`}
+          >
+            {(value || '').length}/{emailField.maxLength}
+          </Text>
+        </View>
+      )}
 
       {/* Email suggestion */}
       {emailValidation.suggestion && !emailValidation.isValid && value && value.length > 0 && (
