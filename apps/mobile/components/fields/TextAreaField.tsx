@@ -104,7 +104,16 @@ export const TextAreaField: React.FC<FieldComponentProps> = ({
           />
         </Input>
 
-
+        {/* Character count indicator for fields with maxLength */}
+        {textAreaField.maxLength && (
+          <Text
+            className="absolute right-3 bottom-2 text-xs font-tabular-nums"
+            accessibilityLabel={`${textStats.characters} of ${textAreaField.maxLength} characters`}
+            style={{ color: textStats.characters >= textAreaField.maxLength * 0.9 ? '#ef4444' : '#6b7280' }}
+          >
+            {textStats.characters}/{textAreaField.maxLength}
+          </Text>
+        )}
 
         {/* Auto-grow indicator */}
         {textAreaField.autoGrow && (
@@ -118,18 +127,6 @@ export const TextAreaField: React.FC<FieldComponentProps> = ({
           </Box>
         )}
       </Box>
-
-      {/* Character count indicator for fields with maxLength */}
-      {textAreaField.maxLength && (
-        <Box className="mt-1 items-end">
-          <Text
-            className={`text-xs font-tabular-nums ${textStats.characters >= textAreaField.maxLength * 0.9 ? 'text-red-500' : 'text-gray-500'}`}
-            accessibilityLabel={`${textStats.characters} of ${textAreaField.maxLength} characters`}
-          >
-            {textStats.characters}/{textAreaField.maxLength}
-          </Text>
-        </Box>
-      )}
 
       {/* Text statistics */}
       {value && value.length > 0 && (

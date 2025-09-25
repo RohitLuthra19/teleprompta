@@ -72,21 +72,19 @@ export const TextInputField: React.FC<FieldComponentProps> = ({
             testID={`text-input-${textField.id}`}
           />
         </Input>
-      </Box>
 
-      {/* Character count indicator for fields with maxLength */}
-      {textField.maxLength && (
-        <Box className="mt-1 items-end">
+        {/* Character count indicator for fields with maxLength */}
+        {textField.maxLength && (
           <Text
-            className="text-xs text-gray-500 font-tabular-nums"
+            className="absolute right-3 bottom-2 text-xs text-gray-500 font-tabular-nums"
             accessibilityLabel={`${(value || "").length} of ${
               textField.maxLength
             } characters`}
           >
             {(value || "").length}/{textField.maxLength}
           </Text>
-        </Box>
-      )}
+        )}
+      </Box>
     </FieldWrapper>
   );
 };

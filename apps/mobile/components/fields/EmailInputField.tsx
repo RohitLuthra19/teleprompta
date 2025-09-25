@@ -113,7 +113,7 @@ export const EmailInputField: React.FC<FieldComponentProps> = ({
           isInvalid={hasError}
         >
           <InputField
-            className={inputFieldClass}
+            className={`${inputFieldClass} pr-12`}
             value={value || ''}
             onChangeText={handleChangeText}
             onBlur={onBlur}
@@ -126,11 +126,20 @@ export const EmailInputField: React.FC<FieldComponentProps> = ({
             accessibilityLabel={emailField.label}
             accessibilityHint={emailField.description}
             testID={`email-input-${emailField.id}`}
-            // Email-specific accessibility
             textContentType="emailAddress"
             autoComplete="email"
           />
         </Input>
+
+        {/* Character count indicator for fields with maxLength */}
+        {emailField.maxLength && (
+          <Text
+            className="absolute right-3 bottom-2 text-xs text-gray-500 font-tabular-nums"
+            accessibilityLabel={`${(value || '').length} of ${emailField.maxLength} characters`}
+          >
+            {(value || '').length}/{emailField.maxLength}
+          </Text>
+        )}
 
         {/* Email validation indicator */}
         {value && value.length > 0 && (
@@ -145,21 +154,7 @@ export const EmailInputField: React.FC<FieldComponentProps> = ({
             </Text>
           </Box>
         )}
-
-
       </Box>
-
-      {/* Character count indicator for fields with maxLength */}
-      {emailField.maxLength && (
-        <Box className="mt-1 items-end">
-          <Text
-            className="text-xs text-gray-500 font-tabular-nums"
-            accessibilityLabel={`${(value || '').length} of ${emailField.maxLength} characters`}
-          >
-            {(value || '').length}/{emailField.maxLength}
-          </Text>
-        </Box>
-      )}
 
       {/* Email suggestion */}
       {emailValidation.suggestion && !emailValidation.isValid && value && value.length > 0 && (

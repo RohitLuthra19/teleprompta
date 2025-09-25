@@ -109,6 +109,18 @@ export const PasswordInputField: React.FC<FieldComponentProps> = ({
           />
         </Input>
 
+        {/* Character count indicator for fields with maxLength */}
+        {passwordField.maxLength && (
+          <Text
+            className="absolute right-12 bottom-2 text-xs text-gray-500 font-tabular-nums"
+            accessibilityLabel={`${(value || "").length} of ${
+              passwordField.maxLength
+            } characters`}
+          >
+            {(value || "").length}/{passwordField.maxLength}
+          </Text>
+        )}
+
         {/* Password visibility toggle */}
         {!isReadonly && (
           <Pressable
@@ -152,21 +164,6 @@ export const PasswordInputField: React.FC<FieldComponentProps> = ({
             )}
           </Box>
         )}
-
-        {/* Character count indicator for fields with maxLength */}
-        {passwordField.maxLength && (
-          <Box className="mt-1 items-end">
-            <Text
-              className="text-xs text-gray-500 font-tabular-nums"
-              accessibilityLabel={`${(value || "").length} of ${
-                passwordField.maxLength
-              } characters`}
-            >
-              {(value || "").length}/{passwordField.maxLength}
-            </Text>
-          </Box>
-        )}
-
       </Box>
     </FieldWrapper>
   );
