@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { Text, TextInput, View } from 'react-native';
-import type { FieldComponentProps, TextField } from '../../types';
-import { FieldWrapper } from '../FieldWrapper';
+import * as React from "react";
+import { Text, TextInput, View } from "react-native";
+import type { FieldComponentProps, TextField } from "../../types";
+import { FieldWrapper } from "../FieldWrapper";
 
 /**
  * TextInputField component for basic text input fields
@@ -16,6 +16,7 @@ export const TextInputField: React.FC<FieldComponentProps> = ({
   onChange,
   onBlur,
   onFocus,
+  context,
 }) => {
   const textField = field.field as TextField;
   const hasError = error && error.length > 0 && touched;
@@ -24,21 +25,23 @@ export const TextInputField: React.FC<FieldComponentProps> = ({
   // Input styles following Gluestack v3 patterns
   const inputStyles = {
     borderWidth: 1,
-    borderColor: hasError ? '#ef4444' : (disabled ? '#d1d5db' : '#d1d5db'),
+    borderColor: hasError ? "#ef4444" : disabled ? "#d1d5db" : "#d1d5db",
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 10,
     fontSize: 16,
     lineHeight: 24,
-    backgroundColor: isReadonly ? '#f9fafb' : (disabled ? '#f3f4f6' : '#ffffff'),
-    color: disabled ? '#9ca3af' : '#111827',
+    backgroundColor: isReadonly ? "#f9fafb" : disabled ? "#f3f4f6" : "#ffffff",
+    color: disabled ? "#9ca3af" : "#111827",
     minHeight: 44, // Accessibility minimum touch target
     // Focus styles (web only)
-    ...(hasError ? {} : {
-      // These would be handled by focus states in a full Gluestack implementation
-      outlineColor: 'transparent',
-      outlineWidth: 0,
-    })
+    ...(hasError
+      ? {}
+      : {
+          // These would be handled by focus states in a full Gluestack implementation
+          outlineColor: "transparent",
+          outlineWidth: 0,
+        }),
   };
 
   const handleChangeText = (text: string) => {
@@ -46,7 +49,7 @@ export const TextInputField: React.FC<FieldComponentProps> = ({
     if (textField.maxLength && text.length > textField.maxLength) {
       return;
     }
-    
+
     // Apply min length validation on blur
     onChange(text);
   };
@@ -57,21 +60,22 @@ export const TextInputField: React.FC<FieldComponentProps> = ({
       error={error}
       touched={touched}
       disabled={disabled}
+      hasSubmitted={context.hasSubmitted}
       testID={`text-input-field-${textField.id}`}
     >
       <View
         style={{
-          position: 'relative'
+          position: "relative",
         }}
       >
         <TextInput
-          value={value || ''}
+          value={value || ""}
           onChangeText={handleChangeText}
           onBlur={onBlur}
           onFocus={onFocus}
           placeholder={textField.placeholder}
           keyboardType="default"
-          autoCapitalize={textField.autoCapitalize || 'sentences'}
+          autoCapitalize={textField.autoCapitalize || "sentences"}
           autoCorrect={textField.autoCorrect !== false}
           editable={!disabled && !textField.disabled && !isReadonly}
           maxLength={textField.maxLength}
@@ -86,24 +90,26 @@ export const TextInputField: React.FC<FieldComponentProps> = ({
         {textField.maxLength && (
           <View
             style={{
-              position: 'absolute',
+              position: "absolute",
               right: 8,
               bottom: 8,
-              backgroundColor: 'rgba(255, 255, 255, 0.9)',
+              backgroundColor: "rgba(255, 255, 255, 0.9)",
               paddingHorizontal: 4,
               paddingVertical: 2,
-              borderRadius: 4
+              borderRadius: 4,
             }}
           >
             <Text
               style={{
                 fontSize: 12,
-                color: '#6b7280',
-                fontVariant: ['tabular-nums']
+                color: "#6b7280",
+                fontVariant: ["tabular-nums"],
               }}
-              accessibilityLabel={`${(value || '').length} of ${textField.maxLength} characters`}
+              accessibilityLabel={`${(value || "").length} of ${
+                textField.maxLength
+              } characters`}
             >
-              {(value || '').length}/{textField.maxLength}
+              {(value || "").length}/{textField.maxLength}
             </Text>
           </View>
         )}
@@ -112,4 +118,4 @@ export const TextInputField: React.FC<FieldComponentProps> = ({
   );
 };
 
-TextInputField.displayName = 'TextInputField';
+TextInputField.displayName = "TextInputField";

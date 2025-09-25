@@ -17,6 +17,7 @@ export const TextAreaField: React.FC<FieldComponentProps> = ({
   onChange,
   onBlur,
   onFocus,
+  context,
 }) => {
   const textAreaField = field.field as TextAreaFieldType;
   const hasError = error && error.length > 0 && touched;
@@ -85,6 +86,7 @@ export const TextAreaField: React.FC<FieldComponentProps> = ({
       error={error}
       touched={touched}
       disabled={disabled}
+      hasSubmitted={context.hasSubmitted}
       testID={`textarea-field-${textAreaField.id}`}
     >
       <View

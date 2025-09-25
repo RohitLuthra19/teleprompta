@@ -10,7 +10,8 @@ describe('EmailInputField', () => {
     isSubmitting: false,
     disabled: false,
     isValid: true,
-    isDirty: false
+    isDirty: false,
+    hasSubmitted: false
   };
 
   const createMockProps = (fieldOverrides: Partial<TextField> = {}): FieldComponentProps => ({

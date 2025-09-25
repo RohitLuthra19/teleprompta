@@ -10,6 +10,7 @@ export interface FieldWrapperProps {
   children: React.ReactNode;
   style?: ViewStyle;
   testID?: string;
+  hasSubmitted?: boolean;
 }
 
 /**
@@ -27,9 +28,10 @@ export const FieldWrapper: React.FC<FieldWrapperProps> = ({
   disabled,
   children,
   style,
-  testID
+  testID,
+  hasSubmitted = false
 }) => {
-  const hasError = error && error.length > 0 && touched;
+  const hasError = error && error.length > 0 && (touched || hasSubmitted);
   const isRequired = field.required;
 
   // Generate accessibility attributes

@@ -36,6 +36,7 @@ describe('FieldRenderer', () => {
       disabled: false,
       isValid: true,
       isDirty: false,
+      hasSubmitted: false,
       onChange: jest.fn(),
       onBlur: jest.fn(),
       onFocus: jest.fn()

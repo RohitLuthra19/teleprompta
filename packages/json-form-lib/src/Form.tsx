@@ -289,6 +289,7 @@ export const Form = React.forwardRef<FormRef, FormProps>(
         disabled,
         isValid,
         isDirty,
+        hasSubmitted,
         onChange: handleChange,
         onBlur: handleFieldBlur,
         onFocus: handleFieldFocus,
@@ -301,6 +302,7 @@ export const Form = React.forwardRef<FormRef, FormProps>(
         disabled,
         isValid,
         isDirty,
+        hasSubmitted,
         handleChange,
         handleFieldBlur,
         handleFieldFocus,
@@ -338,40 +340,8 @@ export const Form = React.forwardRef<FormRef, FormProps>(
         )}
 
         {schema.fields.map((field) => (
-          <View
-            key={field.id}
-            style={{ marginBottom: schema.layout?.spacing || 12 }}
-          >
-            <Text
-              style={{
-                marginBottom: 4,
-                fontWeight: field.required ? "bold" : "normal",
-              }}
-            >
-              {field.label}
-              {field.required && <Text style={{ color: "red" }}> *</Text>}
-            </Text>
-
-            {field.description && (
-              <Text style={{ fontSize: 12, color: "#666", marginBottom: 4 }}>
-                {field.description}
-              </Text>
-            )}
-
+          <View key={field.id}>
             {renderField(field)}
-
-            {/* Display field errors only if field is touched or form has been submitted */}
-            {errors[field.id] &&
-              errors[field.id].length > 0 &&
-              (touched[field.id] || hasSubmitted) && (
-                <View style={{ marginTop: 4 }}>
-                  {errors[field.id].map((error, index) => (
-                    <Text key={index} style={{ color: "red", fontSize: 12 }}>
-                      {error}
-                    </Text>
-                  ))}
-                </View>
-              )}
           </View>
         ))}
 

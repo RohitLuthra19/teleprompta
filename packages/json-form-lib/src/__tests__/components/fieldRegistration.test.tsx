@@ -191,7 +191,8 @@ describe('Field Registration System', () => {
         isSubmitting: false,
         disabled: false,
         isValid: true,
-        isDirty: false
+        isDirty: false,
+        hasSubmitted: false
       };
 
       const element = fieldRenderer.render(mockField, mockContext);
@@ -224,7 +225,8 @@ describe('Field Registration System', () => {
         isSubmitting: false,
         disabled: false,
         isValid: true,
-        isDirty: false
+        isDirty: false,
+        hasSubmitted: false
       };
 
       const element = fieldRenderer.render(mockField, mockContext);

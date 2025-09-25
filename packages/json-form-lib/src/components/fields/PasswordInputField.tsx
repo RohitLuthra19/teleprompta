@@ -17,6 +17,7 @@ export const PasswordInputField: React.FC<FieldComponentProps> = ({
   onChange,
   onBlur,
   onFocus,
+  context,
 }) => {
   const passwordField = field.field as TextField;
   const hasError = error && error.length > 0 && touched;
@@ -90,6 +91,7 @@ export const PasswordInputField: React.FC<FieldComponentProps> = ({
       error={error}
       touched={touched}
       disabled={disabled}
+      hasSubmitted={context.hasSubmitted}
       testID={`password-input-field-${passwordField.id}`}
     >
       <View

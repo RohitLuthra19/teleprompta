@@ -449,6 +449,7 @@ export interface RenderContext {
   disabled: boolean;
   isValid: boolean;
   isDirty: boolean;
+  hasSubmitted: boolean;
   // Event handlers
   onChange?: (fieldId: string, value: any) => void;
   onBlur?: (fieldId: string) => void;

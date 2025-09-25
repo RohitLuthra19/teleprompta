@@ -17,6 +17,7 @@ export const EmailInputField: React.FC<FieldComponentProps> = ({
   onChange,
   onBlur,
   onFocus,
+  context,
 }) => {
   const emailField = field.field as TextField;
   const hasError = error && error.length > 0 && touched;
@@ -110,6 +111,7 @@ export const EmailInputField: React.FC<FieldComponentProps> = ({
       error={error}
       touched={touched}
       disabled={disabled}
+      hasSubmitted={context.hasSubmitted}
       testID={`email-input-field-${emailField.id}`}
     >
       <View

@@ -118,6 +118,7 @@ export const NumberInputField: React.FC<FieldComponentProps> = ({
       error={error}
       touched={touched}
       disabled={disabled}
+      hasSubmitted={context.hasSubmitted}
       testID={`number-input-field-${numberField.id}`}
     >
       <View
