@@ -4,7 +4,7 @@ import type { FieldComponentProps, TextField } from '../../types';
 import { FieldWrapper } from '../FieldWrapper';
 
 /**
- * TextInputField component for text, email, and password input fields
+ * TextInputField component for basic text input fields
  * Integrates with Gluestack v3 styling patterns
  */
 export const TextInputField: React.FC<FieldComponentProps> = ({
@@ -16,37 +16,10 @@ export const TextInputField: React.FC<FieldComponentProps> = ({
   onChange,
   onBlur,
   onFocus,
-  context
 }) => {
   const textField = field.field as TextField;
   const hasError = error && error.length > 0 && touched;
   const isReadonly = textField.readonly;
-
-  // Determine keyboard type based on field type
-  const getKeyboardType = () => {
-    switch (textField.type) {
-      case 'email':
-        return 'email-address';
-      default:
-        return 'default';
-    }
-  };
-
-  // Determine auto-capitalize behavior
-  const getAutoCapitalize = () => {
-    if (textField.autoCapitalize) {
-      return textField.autoCapitalize;
-    }
-    
-    switch (textField.type) {
-      case 'email':
-        return 'none';
-      case 'password':
-        return 'none';
-      default:
-        return 'sentences';
-    }
-  };
 
   // Input styles following Gluestack v3 patterns
   const inputStyles = {
@@ -74,6 +47,7 @@ export const TextInputField: React.FC<FieldComponentProps> = ({
       return;
     }
     
+    // Apply min length validation on blur
     onChange(text);
   };
 
@@ -96,28 +70,16 @@ export const TextInputField: React.FC<FieldComponentProps> = ({
           onBlur={onBlur}
           onFocus={onFocus}
           placeholder={textField.placeholder}
-          secureTextEntry={textField.type === 'password'}
-          keyboardType={getKeyboardType()}
-          autoCapitalize={getAutoCapitalize()}
-          autoCorrect={textField.autoCorrect !== false && textField.type !== 'email'}
-          editable={!disabled && !isReadonly}
+          keyboardType="default"
+          autoCapitalize={textField.autoCapitalize || 'sentences'}
+          autoCorrect={textField.autoCorrect !== false}
+          editable={!disabled && !textField.disabled && !isReadonly}
           maxLength={textField.maxLength}
           style={inputStyles}
           // Accessibility props
           accessibilityLabel={textField.label}
           accessibilityHint={textField.description}
-          // accessibilityRequired and accessibilityInvalid are not supported in React Native TextInput
           testID={`text-input-${textField.id}`}
-          // Additional accessibility for password fields
-          {...(textField.type === 'password' && {
-            textContentType: 'password',
-            passwordRules: 'minlength: 8;'
-          })}
-          // Additional accessibility for email fields
-          {...(textField.type === 'email' && {
-            textContentType: 'emailAddress',
-            keyboardType: 'email-address'
-          })}
         />
 
         {/* Character count indicator for fields with maxLength */}

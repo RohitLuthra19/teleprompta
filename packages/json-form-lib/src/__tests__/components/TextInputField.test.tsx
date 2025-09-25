@@ -91,47 +91,13 @@ describe('TextInputField', () => {
     expect(props.onBlur).toHaveBeenCalled();
   });
 
-  describe('Field Types', () => {
-    it('should use email keyboard for email fields', () => {
-      const props = createMockProps({ type: 'email' });
-      const { getByTestId } = render(<TextInputField {...props} />);
-
-      const input = getByTestId('text-input-test-field');
-      expect(input.props.keyboardType).toBe('email-address');
-    });
-
-    it('should use secure text entry for password fields', () => {
-      const props = createMockProps({ type: 'password' });
-      const { getByTestId } = render(<TextInputField {...props} />);
-
-      const input = getByTestId('text-input-test-field');
-      expect(input.props.secureTextEntry).toBe(true);
-    });
-
+  describe('Basic Text Field', () => {
     it('should use default keyboard for text fields', () => {
       const props = createMockProps({ type: 'text' });
       const { getByTestId } = render(<TextInputField {...props} />);
 
       const input = getByTestId('text-input-test-field');
       expect(input.props.keyboardType).toBe('default');
-    });
-  });
-
-  describe('Auto-capitalization', () => {
-    it('should use none for email fields', () => {
-      const props = createMockProps({ type: 'email' });
-      const { getByTestId } = render(<TextInputField {...props} />);
-
-      const input = getByTestId('text-input-test-field');
-      expect(input.props.autoCapitalize).toBe('none');
-    });
-
-    it('should use none for password fields', () => {
-      const props = createMockProps({ type: 'password' });
-      const { getByTestId } = render(<TextInputField {...props} />);
-
-      const input = getByTestId('text-input-test-field');
-      expect(input.props.autoCapitalize).toBe('none');
     });
 
     it('should use sentences for text fields by default', () => {
@@ -151,6 +117,25 @@ describe('TextInputField', () => {
 
       const input = getByTestId('text-input-test-field');
       expect(input.props.autoCapitalize).toBe('words');
+    });
+
+    it('should enable auto-correct for text fields by default', () => {
+      const props = createMockProps({ type: 'text' });
+      const { getByTestId } = render(<TextInputField {...props} />);
+
+      const input = getByTestId('text-input-test-field');
+      expect(input.props.autoCorrect).toBe(true);
+    });
+
+    it('should respect custom autoCorrect setting', () => {
+      const props = createMockProps({ 
+        type: 'text',
+        autoCorrect: false
+      });
+      const { getByTestId } = render(<TextInputField {...props} />);
+
+      const input = getByTestId('text-input-test-field');
+      expect(input.props.autoCorrect).toBe(false);
     });
   });
 
@@ -278,70 +263,18 @@ describe('TextInputField', () => {
     });
   });
 
-  describe('Auto-correct', () => {
-    it('should disable auto-correct for email fields', () => {
-      const props = createMockProps({ type: 'email' });
-      const { getByTestId } = render(<TextInputField {...props} />);
-
-      const input = getByTestId('text-input-test-field');
-      expect(input.props.autoCorrect).toBe(false);
-    });
-
-    it('should enable auto-correct for text fields by default', () => {
-      const props = createMockProps({ type: 'text' });
-      const { getByTestId } = render(<TextInputField {...props} />);
-
-      const input = getByTestId('text-input-test-field');
-      expect(input.props.autoCorrect).toBe(true);
-    });
-
-    it('should respect custom autoCorrect setting', () => {
-      const props = createMockProps({ 
-        type: 'text',
-        autoCorrect: false
-      });
-      const { getByTestId } = render(<TextInputField {...props} />);
-
-      const input = getByTestId('text-input-test-field');
-      expect(input.props.autoCorrect).toBe(false);
-    });
-  });
-
   describe('Accessibility', () => {
     it('should provide correct accessibility attributes', () => {
       const props = createMockProps({
         label: 'Username',
-        description: 'Enter your username',
-        required: true
+        description: 'Enter your username'
       });
-      props.error = ['Required field'];
-      props.touched = true;
       
       const { getByTestId } = render(<TextInputField {...props} />);
 
       const input = getByTestId('text-input-test-field');
       expect(input.props.accessibilityLabel).toBe('Username');
       expect(input.props.accessibilityHint).toBe('Enter your username');
-      expect(input.props.accessibilityRequired).toBe(true);
-      expect(input.props.accessibilityInvalid).toBe(true);
-    });
-
-    it('should provide password-specific accessibility attributes', () => {
-      const props = createMockProps({ type: 'password' });
-      const { getByTestId } = render(<TextInputField {...props} />);
-
-      const input = getByTestId('text-input-test-field');
-      expect(input.props.textContentType).toBe('password');
-      expect(input.props.passwordRules).toBe('minlength: 8;');
-    });
-
-    it('should provide email-specific accessibility attributes', () => {
-      const props = createMockProps({ type: 'email' });
-      const { getByTestId } = render(<TextInputField {...props} />);
-
-      const input = getByTestId('text-input-test-field');
-      expect(input.props.textContentType).toBe('emailAddress');
-      expect(input.props.keyboardType).toBe('email-address');
     });
   });
 });

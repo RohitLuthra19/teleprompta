@@ -1,11 +1,15 @@
 // Export all field components
+export { EmailInputField } from './EmailInputField';
 export { NumberInputField } from './NumberInputField';
+export { PasswordInputField } from './PasswordInputField';
 export { TextAreaField } from './TextAreaField';
 export { TextInputField } from './TextInputField';
 
 // Field component registry
 import { fieldRenderer } from '../../FieldRenderer';
+import { EmailInputField } from './EmailInputField';
 import { NumberInputField } from './NumberInputField';
+import { PasswordInputField } from './PasswordInputField';
 import { TextAreaField } from './TextAreaField';
 import { TextInputField } from './TextInputField';
 
@@ -16,8 +20,8 @@ import { TextInputField } from './TextInputField';
 export function registerBuiltInFieldComponents(): void {
   // Text-based fields
   fieldRenderer.registerFieldType('text', TextInputField);
-  fieldRenderer.registerFieldType('email', TextInputField);
-  fieldRenderer.registerFieldType('password', TextInputField);
+  fieldRenderer.registerFieldType('email', EmailInputField);
+  fieldRenderer.registerFieldType('password', PasswordInputField);
   
   // Multi-line text
   fieldRenderer.registerFieldType('textarea', TextAreaField);
