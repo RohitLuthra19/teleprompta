@@ -9,6 +9,7 @@ interface ScriptRequest extends Request {
   body: {
     title: string;
     description: string;
+    category?: string[];
   };
   params: {
     id: string;
@@ -22,9 +23,12 @@ interface ScriptRequest extends Request {
 router.post("/", authMiddleware, async (req: ScriptRequest, res: Response) => {
   try {
     const { title, description } = req.body;
+    const incomingCategory = Array.isArray(req.body.category)
+      ? req.body.category
+      : [];
 
     const script = await prisma.script.create({
-      data: { title, description },
+      data: { title, description, category: incomingCategory },
     });
 
     res.status(201).json(script);
@@ -81,10 +85,17 @@ router.put(
     try {
       const { id } = req.params;
       const { title, description } = req.body;
+      const incomingCategory = Array.isArray(req.body.category)
+        ? req.body.category
+        : undefined; // undefined => do not update if not provided
 
       const updatedScript = await prisma.script.update({
         where: { id },
-        data: { title, description },
+        data: {
+          title,
+          description,
+          ...(incomingCategory !== undefined ? { category: incomingCategory } : {}),
+        },
       });
 
       res.json(updatedScript);

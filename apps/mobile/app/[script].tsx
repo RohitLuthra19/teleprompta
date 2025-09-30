@@ -1,21 +1,32 @@
 // apps/mobile/app/teleprompter/[script].tsx
-import React, { useState, useRef, useEffect } from "react";
-import { Platform, ScrollView, View } from "react-native";
-import { useRouter, useLocalSearchParams } from "expo-router";
-import { Button, ButtonText } from "@/components/ui/button";
+import { apiFetch } from "@/components/api";
 import { Box } from "@/components/ui/box";
+import { Button, ButtonText } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
+import { useAuthGate } from "@/components/useAuthGate";
 import Slider from "@react-native-community/slider";
-import { dummyScripts } from "./scripts";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import React, { useEffect, useRef, useState } from "react";
+import { Platform, ScrollView, View } from "react-native";
+
+type Script = {
+  id: string;
+  title: string;
+  description: string;
+  category?: string[];
+  createdAt: string;
+};
 
 export default function TeleprompterScreen() {
   const router = useRouter();
+  const { isReady } = useAuthGate();
 
-  // Get dynamic param from the route
+  // Read id from route params (named "script" for back-compat)
   const { script } = useLocalSearchParams<{ script: string }>();
-  const scriptId = parseInt(script, 10);
-  const scriptContent =
-    dummyScripts.find((s) => s.id === scriptId)?.content || "";
+
+  const [loading, setLoading] = useState(false); // reserved for future loader UI
+  const [data, setData] = useState<Script | null>(null);
+  const content = data?.description || "";
 
   // State
   const [isPlaying, setIsPlaying] = useState(false);
@@ -57,6 +68,33 @@ export default function TeleprompterScreen() {
     };
   }, []);
 
+  // Load selected script from backend
+  useEffect(() => {
+    if (!isReady || !script) return;
+    (async () => {
+      try {
+        setLoading(true);
+        const result = await apiFetch(`/api/v1/scripts/${script}`, { auth: true });
+        setData(result as Script);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [isReady, script]);
+
+  if (!isReady) return null;
+  if (loading || !data) {
+    return (
+      <View className="flex-1 bg-background-100">
+        <Box className="p-4">
+          <Text>Loading...</Text>
+        </Box>
+      </View>
+    );
+  }
+
   return (
     <View className="flex-1 bg-background-100">
       <ScrollView
@@ -79,7 +117,7 @@ export default function TeleprompterScreen() {
             paddingHorizontal: 16,
           }}
         >
-          {scriptContent}
+          {content}
         </Text>
       </ScrollView>
       <Box className="p-4 bg-background-0 border-t border-outline-200">

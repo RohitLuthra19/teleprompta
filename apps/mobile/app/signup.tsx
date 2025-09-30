@@ -6,7 +6,7 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 import { Alert, ScrollView, View } from 'react-native';
 
-export default function FormDemo() {
+export default function Signup() {
   const router = useRouter();
 
   // Example form schema for user registration
@@ -65,54 +65,11 @@ export default function FormDemo() {
     }
   };
 
-  // Example form schema for script creation
-  const scriptFormSchema: FormSchema = {
-    id: 'script-creation',
-    title: 'Create New Script',
-    description: 'Add a new teleprompter script',
-    fields: [
-      {
-        id: 'title',
-        type: 'text',
-        label: 'Script Title',
-        placeholder: 'Enter script title',
-        required: true,
-        maxLength: 100,
-        autoCapitalize: 'words'
-      },
-      {
-        id: 'content',
-        type: 'textarea',
-        label: 'Script Content',
-        placeholder: 'Enter your script content here...',
-        required: true,
-        rows: 8,
-        maxLength: 5000,
-        autoGrow: true,
-        description: 'This is the text that will be displayed in the teleprompter'
-      },
-      {
-        id: 'category',
-        type: 'text',
-        label: 'Category',
-        placeholder: 'e.g., News, Presentation, Speech',
-        maxLength: 50,
-        description: 'Optional category to help organize your scripts'
-      }
-    ],
-    layout: {
-      type: 'vertical',
-      spacing: 16
-    }
-  };
-
-  const [currentSchema, setCurrentSchema] = React.useState<FormSchema>(userFormSchema);
-
   const handleSubmit = (values: Record<string, any>) => {
     console.log('Form submitted:', values);
     Alert.alert(
       'Form Submitted!',
-      `Form "${currentSchema.title}" submitted successfully!\n\nCheck the console for full data.`,
+      `Form submitted successfully!\n\nCheck the console for full data.`,
       [{ text: 'OK' }]
     );
   };
@@ -127,29 +84,6 @@ export default function FormDemo() {
 
   return (
     <View className="flex-1 bg-background-100">
-      {/* Header with form switcher */}
-      <Box className="p-4 bg-background-0 border-b border-outline-200">
-        <View className="flex-row gap-2">
-          <Button
-            size="sm"
-            variant={currentSchema.id === 'user-registration' ? 'solid' : 'outline'}
-            action="primary"
-            onPress={() => setCurrentSchema(userFormSchema)}
-            className="flex-1"
-          >
-            <ButtonText>User Form</ButtonText>
-          </Button>
-          <Button
-            size="sm"
-            variant={currentSchema.id === 'script-creation' ? 'solid' : 'outline'}
-            action="primary"
-            onPress={() => setCurrentSchema(scriptFormSchema)}
-            className="flex-1"
-          >
-            <ButtonText>Script Form</ButtonText>
-          </Button>
-        </View>
-      </Box>
 
       {/* Form */}
       <ScrollView 
@@ -158,8 +92,7 @@ export default function FormDemo() {
         keyboardShouldPersistTaps="handled"
       >
         <Form
-          key={currentSchema.id} // Force re-render when schema changes
-          schema={currentSchema}
+          schema={userFormSchema}
           initialValues={{}}
           events={{
             submit: handleSubmit,
