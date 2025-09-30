@@ -6,7 +6,9 @@
   "scripts": {
     "build": "pnpm --filter mobile build && pnpm --filter backend build",
     "dev": "pnpm --parallel dev",
-    "clean": "pnpm --parallel clean"
+    "clean": "pnpm --parallel clean",
+    "deploy": "pnpm build && npx vercel --prod --cwd .",
+    "vercel-build": "pnpm run build"
   },
   "keywords": [],
   "author": "",

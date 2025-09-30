@@ -153,7 +153,7 @@ export default function TeleprompterScreen() {
             action={isPlaying ? "negative" : "positive"}
             onPress={isPlaying ? stopScrolling : startScrolling}
           >
-            <ButtonText>{isPlaying ? "Stop" : "Start"} Teleprompter</ButtonText>
+            <ButtonText>{isPlaying ? "Stop" : "Start"}</ButtonText>
           </Button>
 
           <Button
