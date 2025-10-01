@@ -31,15 +31,13 @@ app.use(express.json());
 // Health check route
 app.use("/api/health", healthRouter);
 
-// Auth routes
-// Versioning added: /api/v1/auth
+
 app.use("/api/v1/auth", authRouter);
 
-// Protected route example
-// req.user is added by authMiddleware
+
 app.use("/api/v1/profile", profileRouter);
 
-// Script routes
+
 app.use("/api/v1/scripts", scriptRouter);
 
 // -------------------
