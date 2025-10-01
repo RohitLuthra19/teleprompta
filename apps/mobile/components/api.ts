@@ -1,6 +1,7 @@
 import { getToken } from './auth';
 
-export const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || 'http://localhost:3000';
+// Default to same-origin in production; fall back to localhost for dev
+export const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || '';
 
 type ApiOptions = RequestInit & { auth?: boolean };
 

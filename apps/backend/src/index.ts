@@ -1,8 +1,10 @@
 import cors from "cors";
+import "dotenv/config";
 import express, { NextFunction, Request, Response } from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import authRouter from "./routes/auth.js";
+import healthRouter from "./routes/health.js";
 import scriptRouter from "./routes/script.js";
 import profileRouter from "./routes/user.js";
 
@@ -27,13 +29,7 @@ app.use(express.json());
 // -------------------
 
 // Health check route
-app.get("/api/health", (_req: Request, res: Response) => {
-  res.json({
-    status: "ok",
-    timestamp: new Date().toISOString(),
-    env: process.env.NODE_ENV,
-  });
-});
+app.use("/api/health", healthRouter);
 
 // Auth routes
 // Versioning added: /api/v1/auth
