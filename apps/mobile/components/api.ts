@@ -1,7 +1,24 @@
 import { getToken } from './auth';
 
-// Default to same-origin in production; fall back to localhost for dev
-export const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || '';
+// API Base URL configuration
+// - Uses environment variable if set
+// - Falls back to localhost:3000 for development
+// - Uses empty string (same-origin) for production builds
+const getApiBaseUrl = () => {
+  if (process.env.EXPO_PUBLIC_API_BASE_URL) {
+    return process.env.EXPO_PUBLIC_API_BASE_URL;
+  }
+  
+  // Development fallback
+  if (__DEV__) {
+    return 'http://localhost:3000';
+  }
+  
+  // Production fallback (same-origin)
+  return '';
+};
+
+export const API_BASE_URL = getApiBaseUrl();
 
 type ApiOptions = RequestInit & { auth?: boolean };
 

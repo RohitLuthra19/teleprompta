@@ -42,6 +42,7 @@ export default function Index() {
 
   if (!isReady) return null;
 
+  console.log('Scripts:', scripts);
   return (
     <View className="flex-1 bg-background-100">
       <ScrollView
@@ -49,7 +50,7 @@ export default function Index() {
         contentContainerStyle={{ gap: 12 }}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={load} />}
       >
-        {scripts.map((s) => (
+        {scripts?.map((s) => (
           <ScriptCard
             key={s.id}
             title={s.title}
