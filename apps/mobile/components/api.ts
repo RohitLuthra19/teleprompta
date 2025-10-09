@@ -55,19 +55,14 @@ export async function apiFetch(path: string, options: ApiOptions = {}) {
 
   if (!res.ok) {
     // Handle authentication errors (401 Unauthorized, 403 Forbidden)
-    // Also handle 404 errors for API endpoints as potential deployment issues
-    if (res.status === 401 || res.status === 403 || res.status === 404) {
+    if (res.status === 401 || res.status === 403) {
       // Clear the invalid token
       await clearToken();
       
       // Automatically redirect to login page
       NavigationService.redirectToLogin();
       
-      if (res.status === 404) {
-        throw new AuthenticationError('API endpoint not found. Please check your deployment configuration.');
-      } else {
-        throw new AuthenticationError('Authentication failed. Please login again.');
-      }
+      throw new AuthenticationError('Authentication failed. Please login again.');
     }
 
     const message =

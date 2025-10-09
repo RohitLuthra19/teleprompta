@@ -8,6 +8,11 @@ router.get("/", async (_req: Request, res: Response) => {
     status: "ok",
     timestamp: new Date().toISOString(),
     env: process.env.NODE_ENV,
+    config: {
+      hasDatabase: !!process.env.DATABASE_URL,
+      hasJwtSecret: !!process.env.JWT_SECRET,
+      port: process.env.PORT || 3000,
+    },
     database: {
       status: "unknown",
       latency: null as number | null,

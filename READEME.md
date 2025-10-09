@@ -62,6 +62,18 @@ The app is configured for Vercel deployment with:
 - **Health Check**: Visit `/api/health` to verify backend deployment
 - **Same-Origin**: Frontend and API share the same domain
 
+#### Required Environment Variables on Vercel:
+```bash
+DATABASE_URL=postgresql://username:password@host:port/database
+JWT_SECRET=your-secret-key-here
+```
+
+#### Deployment Steps:
+1. **Set up database**: Create a PostgreSQL database (Neon, Supabase, etc.)
+2. **Configure environment**: Add `DATABASE_URL` and `JWT_SECRET` in Vercel dashboard
+3. **Deploy**: `git push` triggers automatic deployment
+4. **Test**: Check `/api/health` endpoint for database connectivity
+
 ### API Connection Issues
 If your mobile app can't connect to the backend:
 
