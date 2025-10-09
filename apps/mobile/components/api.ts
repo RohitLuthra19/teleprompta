@@ -2,39 +2,7 @@ import { clearToken, getToken } from './auth';
 import { NavigationService } from './NavigationService';
 
 // API Base URL configuration
-// Simple and reliable approach for Vercel deployment
-const getApiBaseUrl = () => {
-  // If EXPO_PUBLIC_API_BASE_URL is set in Vercel dashboard, use it
-  if (typeof process.env.EXPO_PUBLIC_API_BASE_URL === 'string') {
-    return process.env.EXPO_PUBLIC_API_BASE_URL; // Could be empty string for same-origin
-  }
-  
-  // Fallback logic based on environment detection
-  const isLocalDevelopment = typeof window !== 'undefined' && 
-                             window.location.hostname === 'localhost';
-  
-  const isDevEnvironment = __DEV__ || process.env.NODE_ENV === 'development';
-  
-  console.log('API URL Detection:', {
-    isLocalDevelopment,
-    isDevEnvironment,
-    hostname: typeof window !== 'undefined' ? window.location.hostname : 'server',
-    NODE_ENV: process.env.NODE_ENV,
-    __DEV__,
-  });
-  
-  // Only use localhost if we're actually running on localhost
-  if (isLocalDevelopment && isDevEnvironment) {
-    console.log('Using localhost for local development');
-    return 'http://localhost:3000';
-  }
-  
-  // Default to same-origin for production/Vercel
-  console.log('Using same-origin for production');
-  return '';
-};
-
-export const API_BASE_URL = getApiBaseUrl();
+export const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || '';
 
 type ApiOptions = RequestInit & { auth?: boolean };
 
