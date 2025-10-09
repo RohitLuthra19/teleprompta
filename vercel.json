@@ -3,19 +3,8 @@
   "installCommand": "corepack enable && pnpm install --frozen-lockfile",
   "buildCommand": "pnpm --filter backend build && pnpm --filter mobile build",
   "outputDirectory": "apps/mobile/dist",
-  "functions": {
-    "apps/backend/dist/index.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
   "routes": [
-    { 
-      "src": "/api/(.*)", 
-      "dest": "/apps/backend/dist/index.js" 
-    },
-    { 
-      "src": "/(.*)", 
-      "dest": "/apps/mobile/dist/$1" 
-    }
+    { "src": "/api/(.*)", "dest": "/apps/backend/dist/index.js" },
+    { "src": "/(.*)", "dest": "/apps/mobile/dist/$1" }
   ]
 }
