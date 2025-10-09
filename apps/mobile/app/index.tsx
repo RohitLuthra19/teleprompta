@@ -31,6 +31,8 @@ export default function Index() {
       setScripts(data as Script[]);
     } catch (e) {
       console.error(e);
+      // Authentication errors are now handled automatically in apiFetch
+      // For other errors, you might want to show a toast or error message
     } finally {
       setLoading(false);
     }

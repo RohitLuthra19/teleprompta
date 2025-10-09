@@ -22,29 +22,37 @@ cp apps/mobile/.env.example apps/mobile/.env.local
 # For physical device: http://YOUR_LOCAL_IP:3000
 ```
 
-## 3. Start backend
+## 3. Start both apps with single command ⚡
 ```bash
-pnpm --filter backend dev
+pnpm dev
+# or
+pnpm start
 ```
-Backend will run on http://localhost:3000
 
-## 4. Start expo mobile app
+This will start:
+- **Backend**: http://localhost:3000
+- **Mobile app**: http://localhost:8081
+
+### Alternative: Start apps individually
 ```bash
+# Backend only
+pnpm run dev:backend
+
+# Mobile app only  
+pnpm run dev:mobile
+
+# Legacy commands (still work)
+pnpm --filter backend dev
 pnpm --filter mobile start
 ```
 
-### Alternative commands:
-```bash
-cd apps/backend
-pnpm dev
-```
-
-```bash
-cd apps/mobile
-npx expo start --web
-```
-
 ## Troubleshooting
+
+### Authentication & Auto-Logout 🔐
+The app now handles expired/invalid tokens automatically:
+- **Valid Token**: App works normally
+- **Expired/Invalid Token**: Automatically clears token and redirects to login
+- **No "No scripts yet" with invalid tokens**: Users are immediately redirected to login
 
 ### API Connection Issues
 If your mobile app can't connect to the backend:

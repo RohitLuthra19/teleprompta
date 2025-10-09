@@ -1,4 +1,5 @@
-import { getToken } from './auth';
+import { clearToken, getToken } from './auth';
+import { NavigationService } from './NavigationService';
 
 // API Base URL configuration
 // - Uses environment variable if set
@@ -22,6 +23,14 @@ export const API_BASE_URL = getApiBaseUrl();
 
 type ApiOptions = RequestInit & { auth?: boolean };
 
+// Custom error class for authentication errors
+export class AuthenticationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'AuthenticationError';
+  }
+}
+
 export async function apiFetch(path: string, options: ApiOptions = {}) {
   const url = `${API_BASE_URL}${path}`;
   const headers: Record<string, string> = {
@@ -44,6 +53,17 @@ export async function apiFetch(path: string, options: ApiOptions = {}) {
   }
 
   if (!res.ok) {
+    // Handle authentication errors (401 Unauthorized, 403 Forbidden)
+    if (res.status === 401 || res.status === 403) {
+      // Clear the invalid token
+      await clearToken();
+      
+      // Automatically redirect to login page
+      NavigationService.redirectToLogin();
+      
+      throw new AuthenticationError('Authentication failed. Please login again.');
+    }
+
     const message =
       (data && (data.error || data.message)) ||
       (text && text.slice(0, 500)) ||

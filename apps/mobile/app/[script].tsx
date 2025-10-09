@@ -78,6 +78,7 @@ export default function TeleprompterScreen() {
         setData(result as Script);
       } catch (e) {
         console.error(e);
+        // Authentication errors are now handled automatically in apiFetch
       } finally {
         setLoading(false);
       }

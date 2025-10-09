@@ -65,6 +65,7 @@ export default function AddScript() {
       Alert.alert('Success', 'Script created');
       router.replace('/scripts-list');
     } catch (e: any) {
+      // Authentication errors are now handled automatically in apiFetch
       Alert.alert('Error', e.message || 'Failed to create script');
     }
   };

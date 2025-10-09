@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "pnpm --filter mobile build && pnpm --filter backend build",
     "dev": "pnpm --parallel dev",
+    "dev:backend": "pnpm --filter backend dev",
+    "dev:mobile": "pnpm --filter mobile dev",
+    "start": "pnpm run dev",
+    "build": "pnpm --filter mobile build && pnpm --filter backend build",
     "clean": "pnpm --parallel clean",
     "deploy": "pnpm build && npx vercel --prod --cwd .",
     "vercel-build": "pnpm run build"
