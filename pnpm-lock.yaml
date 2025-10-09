@@ -6,7 +6,11 @@ settings:
 
 importers:
 
-  .: {}
+  .:
+    devDependencies:
+      '@types/argon2':
+        specifier: ^0.15.4
+        version: 0.15.4
 
   apps/backend:
     dependencies:
