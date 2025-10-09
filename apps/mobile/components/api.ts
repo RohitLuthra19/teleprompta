@@ -2,21 +2,35 @@ import { clearToken, getToken } from './auth';
 import { NavigationService } from './NavigationService';
 
 // API Base URL configuration
-// - Uses environment variable if set
-// - Falls back to localhost:3000 for development
-// - Uses empty string (same-origin) for production builds
+// Simple and reliable approach for Vercel deployment
 const getApiBaseUrl = () => {
-  if (process.env.EXPO_PUBLIC_API_BASE_URL) {
-    return process.env.EXPO_PUBLIC_API_BASE_URL;
+  // If EXPO_PUBLIC_API_BASE_URL is set in Vercel dashboard, use it
+  if (typeof process.env.EXPO_PUBLIC_API_BASE_URL === 'string') {
+    return process.env.EXPO_PUBLIC_API_BASE_URL; // Could be empty string for same-origin
   }
   
-  // Development fallback
-  if (__DEV__) {
+  // Fallback logic based on environment detection
+  const isLocalDevelopment = typeof window !== 'undefined' && 
+                             window.location.hostname === 'localhost';
+  
+  const isDevEnvironment = __DEV__ || process.env.NODE_ENV === 'development';
+  
+  console.log('API URL Detection:', {
+    isLocalDevelopment,
+    isDevEnvironment,
+    hostname: typeof window !== 'undefined' ? window.location.hostname : 'server',
+    NODE_ENV: process.env.NODE_ENV,
+    __DEV__,
+  });
+  
+  // Only use localhost if we're actually running on localhost
+  if (isLocalDevelopment && isDevEnvironment) {
+    console.log('Using localhost for local development');
     return 'http://localhost:3000';
   }
   
-  // Production fallback (same-origin) 
-  // This works because both frontend and API are on the same Vercel domain
+  // Default to same-origin for production/Vercel
+  console.log('Using same-origin for production');
   return '';
 };
 

@@ -68,6 +68,28 @@ DATABASE_URL=postgresql://username:password@host:port/database
 JWT_SECRET=your-secret-key-here
 ```
 
+#### Optional Environment Variables:
+```bash
+# Leave unset for same-origin API calls (recommended)
+EXPO_PUBLIC_API_BASE_URL=
+
+# Or set to a specific URL if needed
+# EXPO_PUBLIC_API_BASE_URL=https://your-api-domain.com
+```
+
+#### Setting Environment Variables in Vercel:
+1. **Via Vercel Dashboard**:
+   - Go to your project in Vercel dashboard
+   - Navigate to Settings → Environment Variables
+   - Add: `DATABASE_URL`, `JWT_SECRET`
+   - **Do NOT set `EXPO_PUBLIC_API_BASE_URL`** (let it use same-origin)
+
+2. **Via Vercel CLI**:
+   ```bash
+   vercel env add DATABASE_URL production
+   vercel env add JWT_SECRET production
+   ```
+
 #### Deployment Steps:
 1. **Set up database**: Create a PostgreSQL database (Neon, Supabase, etc.)
 2. **Configure environment**: Add `DATABASE_URL` and `JWT_SECRET` in Vercel dashboard

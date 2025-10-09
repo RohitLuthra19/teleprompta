@@ -1,5 +1,6 @@
 
 import { apiFetch } from '@/components/api';
+import { ApiDebugInfo } from '@/components/ApiDebugInfo';
 import { clearToken } from '@/components/auth';
 import { Box } from '@/components/ui/box';
 import { Button, ButtonText } from '@/components/ui/button';
@@ -47,6 +48,7 @@ export default function Index() {
   console.log('Scripts:', scripts);
   return (
     <View className="flex-1 bg-background-100">
+      <ApiDebugInfo />
       <ScrollView
         className="flex-1 p-4"
         contentContainerStyle={{ gap: 12 }}
