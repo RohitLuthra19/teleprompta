@@ -53,6 +53,14 @@ The app now handles expired/invalid tokens automatically:
 - **Valid Token**: App works normally
 - **Expired/Invalid Token**: Automatically clears token and redirects to login
 - **No "No scripts yet" with invalid tokens**: Users are immediately redirected to login
+- **API Deployment Issues**: 404 errors also trigger logout (helps with deployment problems)
+
+### Vercel Deployment 🚀
+The app is configured for Vercel deployment with:
+- **Frontend**: Static Expo web app
+- **Backend**: Express API as serverless functions
+- **Health Check**: Visit `/api/health` to verify backend deployment
+- **Same-Origin**: Frontend and API share the same domain
 
 ### API Connection Issues
 If your mobile app can't connect to the backend:
