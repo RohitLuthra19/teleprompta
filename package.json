@@ -10,8 +10,7 @@
     "start": "pnpm run dev",
     "build": "pnpm --filter mobile build && pnpm --filter backend build",
     "clean": "pnpm --parallel clean",
-    "deploy": "pnpm clean && pnpm build && npx vercel --prod --cwd .",
-    "vercel-build": "pnpm clean && pnpm build"
+    "deploy": "pnpm clean && pnpm build && npx vercel --prod --cwd ."
   },
   "keywords": [],
   "author": "",
