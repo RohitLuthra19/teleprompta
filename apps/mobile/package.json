@@ -1,7 +1,12 @@
 {
-  "name": "mobile",
+  "name": "teleprompta",
+  "description": "A cross-platform app for teleprompting",
   "main": "expo-router/entry",
   "version": "1.0.0",
+  "author": {
+    "name": "Rohit Kumar",
+    "email": "rohit.luthra19@gmail.com"
+  },
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
