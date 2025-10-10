@@ -1,18 +1,9 @@
-import { clearToken, getToken } from './auth';
-import { NavigationService } from './NavigationService';
+import { getToken } from './auth';
 
-// API Base URL configuration
+// Default to same-origin in production; fall back to localhost for dev
 export const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || '';
 
 type ApiOptions = RequestInit & { auth?: boolean };
-
-// Custom error class for authentication errors
-export class AuthenticationError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'AuthenticationError';
-  }
-}
 
 export async function apiFetch(path: string, options: ApiOptions = {}) {
   const url = `${API_BASE_URL}${path}`;
@@ -36,17 +27,6 @@ export async function apiFetch(path: string, options: ApiOptions = {}) {
   }
 
   if (!res.ok) {
-    // Handle authentication errors (401 Unauthorized, 403 Forbidden)
-    if (res.status === 401 || res.status === 403) {
-      // Clear the invalid token
-      await clearToken();
-      
-      // Automatically redirect to login page
-      NavigationService.redirectToLogin();
-      
-      throw new AuthenticationError('Authentication failed. Please login again.');
-    }
-
     const message =
       (data && (data.error || data.message)) ||
       (text && text.slice(0, 500)) ||

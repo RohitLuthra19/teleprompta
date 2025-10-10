@@ -12,7 +12,8 @@
     "dev": "nodemon --watch src --exec node --import tsx/esm src/index.ts",
     "build": "tsc && cp -R prisma dist/",
     "start": "node dist/index.js",
-    "postinstall": "prisma generate --schema ./prisma/schema.prisma"
+    "postinstall": "prisma generate --schema ./prisma/schema.prisma",
+    "clean": "rm -rf dist node_modules/.cache"
   },
   "dependencies": {
     "@prisma/client": "^6.16.2",
