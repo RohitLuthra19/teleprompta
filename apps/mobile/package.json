@@ -1,5 +1,5 @@
 {
-  "name": "teleprompta",
+  "name": "mobile",
   "description": "A cross-platform app for teleprompting",
   "main": "expo-router/entry",
   "version": "1.0.0",
