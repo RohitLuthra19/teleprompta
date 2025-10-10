@@ -10,7 +10,6 @@ export function useAuthGate() {
     (async () => {
       const token = await getToken();
       if (!token) {
-        console.log('No token found, redirecting to login...');
         router.replace('/(auth)/login');
       } else {
         setIsReady(true);
