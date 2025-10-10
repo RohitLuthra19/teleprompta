@@ -2,7 +2,10 @@ import { clearToken, getToken } from './auth';
 import { NavigationService } from './NavigationService';
 
 // API Base URL configuration
-export const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || '';
+// For production, use relative URL since API is on same domain
+// For development, use localhost
+export const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || 
+  (process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:3000');
 
 type ApiOptions = RequestInit & { auth?: boolean };
 
