@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "buildCommand": "corepack enable && pnpm i -w && pnpm clean && pnpm build",
   "builds": [
     {
       "src": "apps/mobile/dist/**",
