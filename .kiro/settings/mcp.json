@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "expo-mcp": {
+      "command": "npx",
+      "args": ["expo-mcp", "--server", "https://mcp.expo.dev/mcp"],
+      "env": {
+        "EXPO_ACCESS_TOKEN": "<your-token-here>"
+      },
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
